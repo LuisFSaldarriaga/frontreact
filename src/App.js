@@ -10,6 +10,8 @@ import { Unauthorized } from './components/Unauthorized';
 import Layout from './routes/Layout';
 import Login  from "./components/Login";
 import RequireAuth from './components/RequireAuth';
+import HacedorAuth from './components/HacedorAuth';
+import ClienteAuth from './components/ClienteAuth';
 
 import { Routes, Route } from 'react-router-dom';
 
@@ -27,10 +29,13 @@ function App() {
                 <Route element={<RequireAuth />}>
                 <Route path="/" element={<Home />} />
 
+                <Route element={<ClienteAuth />}>
                 <Route path="solicitar_servicio" element={<RequestServicio />} />
                 <Route path="consultar_hacedor" element={<ConsultHacedor />} />
-
+                </Route>
+                <Route element={<HacedorAuth />}>
                 <Route path="consultar_servicio" element={<ConsultServicio />} />
+                </Route>
                 </Route>
                 <Route path="*" element={<Missing />} />
             </Route>
