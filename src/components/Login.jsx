@@ -1,5 +1,7 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { useRef, useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import axios from '../api/axios';
 
 import { Form, Button } from "react-bootstrap";
@@ -7,7 +9,12 @@ import { Form, Button } from "react-bootstrap";
 const LOGIN_URL = '/ingresar';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     const userRef = useRef();
     const errRef = useRef();
     const rolRef = useRef();
@@ -15,7 +22,6 @@ const Login = () => {
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -44,7 +50,7 @@ const Login = () => {
                 setAuth({ user, pwd, rol, userid });
                 setUser('');
                 setPwd('');
-                setSuccess(true);
+                navigate(from, { replace: true});
             } else if (status === "invalid_user") {
                 setErrMsg('El correo ingresado es invalido.');
                 errRef.current.focus();
@@ -73,16 +79,6 @@ const Login = () => {
 
     return (
         <>
-            {success ? (
-                <section>
-                    <h1>Logueado...</h1>
-                    <br />
-                    <p>
-                       <a href="#"> home</a>
-                    </p>
-                </section>
-            ) : (
-
                 <Form onSubmit={handleSubmit}>
 
                     <p ref={errRef} className={errMsg ? "errorNotification" : "offscreen"} aria-live="assertive"> {errMsg} </p>
@@ -127,8 +123,6 @@ const Login = () => {
                         Ingresar
                     </Button>
                 </Form>
-
-            )}
         </>
     )
 }

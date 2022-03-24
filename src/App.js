@@ -9,6 +9,7 @@ import { RequestServicio } from './components/RequestServicio';
 import { Unauthorized } from './components/Unauthorized';
 import Layout from './routes/Layout';
 import Login  from "./components/Login";
+import RequireAuth from './components/RequireAuth';
 
 import { Routes, Route } from 'react-router-dom';
 
@@ -23,13 +24,14 @@ function App() {
                 <Route path="index" element={<LinkPage />} />
                 <Route path="unauth" element={<Unauthorized />} />
 
-                <Route path="home" element={<Home />} />
+                <Route element={<RequireAuth />}>
+                <Route path="/" element={<Home />} />
 
                 <Route path="solicitar_servicio" element={<RequestServicio />} />
                 <Route path="consultar_hacedor" element={<ConsultHacedor />} />
 
                 <Route path="consultar_servicio" element={<ConsultServicio />} />
-
+                </Route>
                 <Route path="*" element={<Missing />} />
             </Route>
         </Routes>
