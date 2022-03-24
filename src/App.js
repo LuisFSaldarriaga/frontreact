@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { ConsultHacedor } from './components/ConsultHacedor';
+import { ConsultServicio } from './components/ConsultServicio';
+import Home  from './components/Home';
+import LinkPage  from './components/LinkPage';
+import { Missing } from './components/Missing';
+import { RegisterCliente } from './components/RegisterCliente';
+import { RegisterHacedor } from './components/RegisterHacedor';
+import { RequestServicio } from './components/RequestServicio';
+import { Unauthorized } from './components/Unauthorized';
+import Layout from './routes/Layout';
+import Login  from "./components/Login";
+
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    return (
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                <Route path="login" element={<Login />} />
+                <Route path="register_hacedor" element={<RegisterHacedor />} />
+                <Route path="register_cliente" element={<RegisterCliente />} />
+                <Route path="index" element={<LinkPage />} />
+                <Route path="unauth" element={<Unauthorized />} />
+
+                <Route path="home" element={<Home />} />
+
+                <Route path="solicitar_servicio" element={<RequestServicio />} />
+                <Route path="consultar_hacedor" element={<ConsultHacedor />} />
+
+                <Route path="consultar_servicio" element={<ConsultServicio />} />
+
+                <Route path="*" element={<Missing />} />
+            </Route>
+        </Routes>
+    );
 }
 
 export default App;
