@@ -1,10 +1,11 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect} from "react";
 import useAuth from "../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
+import '../stylesheets/basicLoginRegister.css';
 
 import axios from '../api/axios';
 
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Stack } from "react-bootstrap";
 
 const LOGIN_URL = '/ingresar';
 
@@ -31,6 +32,14 @@ const Login = () => {
         setErrMsg('');
     }, [user, pwd]);
 
+    const handleRegisterCliente = () => {
+        navigate('/register_cliente', { replace: true })
+    };
+
+    const handleRegisterHacedor = () => {
+        navigate('/register_hacedor', { replace: true })
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const rol = rolRef.current.value;
@@ -50,7 +59,7 @@ const Login = () => {
                 setAuth({ user, pwd, rol, userid });
                 setUser('');
                 setPwd('');
-                navigate(from, { replace: true});
+                navigate(from, { replace: true });
             } else if (status === "invalid_user") {
                 setErrMsg('El correo ingresado es invalido.');
                 errRef.current.focus();
@@ -79,50 +88,99 @@ const Login = () => {
 
     return (
         <>
-                <Form onSubmit={handleSubmit}>
+            <div className="d-flex justify-content-center align-items-center">
+                <Row
+                    className="d-inline-flex flex-column flex-lg-row flex-fill my-2 mx-lg-5 align-items-center"
+                >
+                    <Col className="d-flex light justify-content-center">
+                        <h1 className="font-weight-bold display-2 pb-lg-5 text-center">
+                            INGRESAR
+                        </h1>
+                    </Col>
+                    <Col
+                        xs={{ order: "last" }}
+                        className="d-flex my-5 mx-lg-5 justify-content-center">
 
-                    <p ref={errRef} className={errMsg ? "errorNotification" : "offscreen"} aria-live="assertive"> {errMsg} </p>
+                        <Container>
+                            <div>
+                                <Container className="d-inline-flex pt-lg-5 align-items-center">
+                                </Container>
+                                <Container className="backPanel d-flex pt-4 px-lg-5 flex-column">
+                                    <Container>
+                                        <Form onSubmit={handleSubmit}>
+                                            <Stack
+                                                gap={4}
+                                                className="d-flex pb-3 border-bottom border-light border-3"
+                                            >
 
-                    <Form.Group className="mb-3" >
-                        <Form.Label htmlFor="rolInput">Rol</Form.Label>
-                        <Form.Select ref={rolRef} id="rolInput">
-                            <option value="cliente">Cliente</option>
-                            <option value="hacedor">Hacedor</option>
+                                                <p ref={errRef} className={errMsg ? "errorNotification" : "offscreen"} aria-live="assertive"> {errMsg} </p>
 
-                        </Form.Select>
-                    </Form.Group>
+                                                <Form.Group className="" >
+                                                    <Form.Label htmlFor="rolInput">Rol</Form.Label>
+                                                    <Form.Select className="form-control" ref={rolRef} defaultValue="norol" id="rolInput">
+                                                        <option disabled value="norol">Seleccione su rol...</option>
+                                                        <option value="cliente">Cliente</option>
+                                                        <option value="hacedor">Hacedor</option>
 
-                    <Form.Group className="mb-3" >
-                        <Form.Label htmlFor="emailInput">Email</Form.Label>
-                        <Form.Control
-                            id="emailInput"
-                            ref={userRef}
-                            type="email"
-                            placeholder="Ingrese el email"
-                            autoComplete="off"
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
-                            required
-                        />
-                    </Form.Group>
+                                                    </Form.Select>
+                                                </Form.Group>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label htmlFor="passwordInput">Contraseña</Form.Label>
-                        <Form.Control
-                            id="passwordInput"
-                            type="password"
-                            placeholder="Ingrese el email"
-                            autoComplete="off"
-                            onChange={(e) => setPwd(e.target.value)}
-                            value={pwd}
-                            required
-                        />
-                    </Form.Group>
+                                                <Form.Group className="" >
+                                                    <Form.Label htmlFor="emailInput">E-mail</Form.Label>
+                                                    <Form.Control
+                                                        className=""
+                                                        id="emailInput"
+                                                        ref={userRef}
+                                                        type="email"
+                                                        placeholder="Ingrese el E-mail"
+                                                        autoComplete="off"
+                                                        onChange={(e) => setUser(e.target.value)}
+                                                        value={user}
+                                                        required
+                                                    />
+                                                </Form.Group>
 
-                    <Button variant="primary" type="submit" >
-                        Ingresar
-                    </Button>
-                </Form>
+                                                <Form.Group className="">
+                                                    <Form.Label htmlFor="passwordInput">Contraseña</Form.Label>
+                                                    <Form.Control
+                                                        className=""
+                                                        id="passwordInput"
+                                                        type="password"
+                                                        placeholder="Ingrese la Contraseña"
+                                                        autoComplete="off"
+                                                        onChange={(e) => setPwd(e.target.value)}
+                                                        value={pwd}
+                                                        required
+                                                    />
+                                                </Form.Group>
+
+                                                <Form.Group className="d-flex justify-content-center align-items-center form-control-lg">
+                                                    <Button className="submitButton" variant="primary" type="submit" >
+                                                        Ingresar
+                                                    </Button>
+                                                </Form.Group>
+                                            </Stack>
+                                        </Form>
+                                    </Container>
+                                    <Container className="d-flex mb-3 justify-content-center flex-wrap" >
+                                        ¿No te has registrado aun? Registrate aquí!
+                                        <Container className="d-flex mb-3 justify-content-between">
+                                            <Button className="link2" variant="secondary" onClick={handleRegisterCliente} >
+                                                Como Cliente
+                                            </Button>
+
+                                            <Button className="link2" variant="secondary" onClick={handleRegisterHacedor} >
+                                                Como Hacedor
+                                            </Button>
+                                        </Container>
+                                    </Container>
+                                </Container>
+                            </div>
+                        </Container>
+
+                    </Col>
+                </Row>
+            </div>
         </>
     )
 }

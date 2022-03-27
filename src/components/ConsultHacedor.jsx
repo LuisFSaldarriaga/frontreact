@@ -1,7 +1,80 @@
-import { React } from "react";
+import { React, useRef, useState } from "react";
 import { Form, Button, Container, InputGroup } from "react-bootstrap";
 
 export function ConsultHacedor() {
+
+    const [match, setMatch] = useState([]);
+    const [idState, setIdState] = useState(false);
+    const [emailState, setEmailState] = useState(true);
+    const [documentState, setDocumentState] = useState(true);
+    const [criteria, setCriteria] = useState("id");
+
+
+    const idRef = useRef();
+    const emailRef = useRef();
+    const documentRef = useRef();
+
+    const handleIdShow = () => {
+        setIdState(false);
+        setEmailState(true);
+        setDocumentState(true);
+        setCriteria("id");
+    };
+
+    const handleEmailShow = () => {
+        setIdState(true);
+        setEmailState(false);
+        setDocumentState(true);
+        setCriteria("email");
+    };
+
+    const handleDocumentShow = () => {
+        setIdState(true);
+        setEmailState(true);
+        setDocumentState(false);
+        setCriteria("document");
+    };
+
+    const handleConsult = () => {
+
+        const id = idRef.current.value;
+        const document = documentRef.current.value;
+        const email = emailRef.current.value;
+        var payload = "";
+
+        if (criteria === "id") {
+            payload = JSON.stringify({
+                id
+            })
+        } else if (criteria === "document") {
+            payload = JSON.stringify({
+                document
+            })
+        } else if (criteria === "email") {
+            payload = JSON.stringify({
+                email
+            })
+        }
+
+        fetch("http://localhost:8080/hacedor/consultar", {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: payload,
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                if (!response.err) {
+                    setMatch([response]);
+                } else {
+
+                }
+            })
+            .catch((error) => console.log(error));
+
+    };
+
+
+
 
     return (
 
@@ -9,32 +82,82 @@ export function ConsultHacedor() {
             <Container className="my-2">
                 <h3>Ingrese el dato de busqueda:</h3>
                 <Form>
+                    <Container>
+                        <Form.Group className="mb-3" controlId="stateDef" >
+                            <Form.Check
+                                defaultChecked
+                                inline
+                                label="ID de hacedor"
+                                name="group1"
+                                type="radio"
 
-                    <Form.Group className="mb-3" controlId="CHId">
+                                value="id"
+                                onChange={handleIdShow}
+                            />
+                            <Form.Check
+                                inline
+                                label="Email"
+                                name="group1"
+                                type="radio"
+
+                                value="email"
+                                onChange={handleEmailShow}
+                            />
+                            <Form.Check
+                                inline
+                                label="Documento"
+                                name="group1"
+                                type="radio"
+
+                                value="document"
+                                onChange={handleDocumentShow}
+                            />
+                        </Form.Group>
+                    </Container>
+
+                    <Form.Group className="mb-3" controlId="CHId" hidden={idState} >
                         <Form.Label>Numero de Identificacion: </Form.Label>
-                        <Form.Control type="number" placeholder="Ingrese el nombre completo" />
+                        <Form.Control ref={idRef} type="number" placeholder="Ingrese el nombre completo" />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="CHDocument">
+                    <Form.Group className="mb-3" controlId="CHDocument" hidden={documentState} >
                         <Form.Label >
                             Documento
                         </Form.Label>
                         <InputGroup className="mb-2">
                             <InputGroup.Text>C.C.</InputGroup.Text>
-                            <Form.Control type="number" placeholder="Ingrese el documento" />
+                            <Form.Control ref={documentRef} type="number" placeholder="Ingrese el documento" />
                         </InputGroup>
 
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="CHEmail">
+                    <Form.Group className="mb-3" controlId="CHEmail" hidden={emailState}>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" placeholder="Ingrese el email" />
+                        <Form.Control ref={emailRef} type="email" placeholder="Ingrese el email" />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
+                    <Button onClick={handleConsult} variant="primary">
                         Buscar Coincidencia
                     </Button>
                 </Form>
+
+                <Container className="my-3 bg-secondary">
+                    <h5>Datos: </h5>
+                    {
+                        match.map((item) => {
+                            return (
+                                <p key={item}>
+                                    ID de hacedor: {item.id} <br />
+                                    Nombre: {item.name} <br />
+                                    Email: {item.email} <br />
+                                    Trabajo Principal: {item.job} <br />
+                                    Area de trabajo: {item.workrange}
+
+                                </p>
+                            )
+                        })
+                    }
+                </Container>
 
             </Container>
 

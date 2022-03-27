@@ -1,17 +1,25 @@
 import { useNavigate, Link } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+
 
 const Home = () => {
-    const { setAuth } = useContext(AuthContext);
+    const { auth } = useAuth();
     const navigate = useNavigate();
 
-    const logout = async () => {
-        // if used in more components, this should be in context 
-        // axios to /logout endpoint 
-        setAuth({});
-        navigate('/');
-    }
+    function isRol(){
+        if (auth?.rol==="hacedor") {
+            console.log(auth?.rol)
+            navigate('/consultar_servicio');
+        } else if (auth?.rol==="cliente") {
+            console.log(auth?.rol)
+            navigate('/solicitar_servicio');
+        };
+    };
+
+    useEffect(() => {
+        isRol();
+    }, [isRol]);
 
     return (
         <section>
@@ -27,7 +35,7 @@ const Home = () => {
             <br />
             <Link to="/index">Go to the index</Link>
             <div className="flexGrow">
-                <button onClick={logout}>Sign Out</button>
+                
             </div>
         </section>
     )

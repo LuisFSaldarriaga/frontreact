@@ -1,6 +1,8 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
+import { NavbarCliente } from "./NavbarCliente";
+
 const ClienteAuth = () => {
     const { auth } = useAuth();
     const location = useLocation();
@@ -16,7 +18,7 @@ const ClienteAuth = () => {
 
     return(
         isCliente()
-            ?<Outlet />
+            ?<><NavbarCliente /><Outlet /></>
             :<Navigate to="/unauth" state={{ from: location}} replace />
     );
 }

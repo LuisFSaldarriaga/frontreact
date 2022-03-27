@@ -1,15 +1,23 @@
 import { React } from "react";
-import { Link } from "react-router-dom"
+import { Button, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"
 
-export function Unauthorized(){
+export function Unauthorized() {
+    const navigate = useNavigate();
 
-    return(
+    const back = () => navigate(-1);
+
+    return (
 
         <>
-            <h1>Acceso no autorizado.</h1>
-            <br />
-            <Link to="/">Go to the Home</Link>
+            <Container>
+                <h1 className="my-4">Acceso no autorizado.</h1>
+                
+                <Button className="my-2" variant="primary" onClick={back} >
+                    Volver
+                </Button>
+            </Container>
         </>
-    
+
     )
 }
