@@ -1,5 +1,6 @@
 import { ConsultHacedor } from './components/ConsultHacedor';
 import { ConsultServicio } from './components/ConsultServicio';
+import { DetailsServicio } from './components/DetailsServicio';
 import Home  from './components/Home';
 import LinkPage  from './components/LinkPage';
 import { Missing } from './components/Missing';
@@ -35,6 +36,7 @@ function App() {
                 </Route>
                 <Route element={<HacedorAuth />}>
                 <Route path="consultar_servicio" element={<ConsultServicio />} />
+                <Route path="dashboard" element={<DetailsServicio />} />
                 </Route>
                 </Route>
                 <Route path="*" element={<Missing />} />
