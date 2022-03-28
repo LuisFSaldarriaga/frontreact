@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 export function Unauthorized() {
     const navigate = useNavigate();
 
-    const back = () => navigate(-1);
+    const back = () => navigate("/");
 
     return (
 

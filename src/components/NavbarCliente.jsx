@@ -2,6 +2,7 @@ import { React } from "react";
 import { Navbar, Nav, Container} from "react-bootstrap";
 import { useNavigate, Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import '../stylesheets/basicNavbar.css';
 
 export function NavbarCliente() {
     const { setAuth } = useAuth();
@@ -21,8 +22,8 @@ export function NavbarCliente() {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
-                            <Link to="/consultar_hacedor">Detalles de hacedor</Link>
-                            <Link to="/solicitar_servicio">Solicitar Servicio</Link>
+                            <Link className="navLinkCustom mx-1" to="/consultar_hacedor">Detalles de hacedor</Link>
+                            <Link className="navLinkCustom mx-1" to="/solicitar_servicio">Solicitar Servicio</Link>
                         </Nav>
                         <Nav>
                         <Nav.Link onClick={logout} href="#logout">

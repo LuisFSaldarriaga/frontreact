@@ -97,6 +97,17 @@
     content: "*Haz click en el boton ingresar nuevo trabajo para inscribir tu trabajo, para eliminar el último ingresado haz click en el boton elminar";
     color: red;
 }
+
+.requestModal::before{
+    content: "*Al confirmar tu solicitud aceptas terminos y condiciones.";
+    color: red;
+}
+
 .modalFooter{
     background-color: var(--GrisMain);
+}
+
+.listPairHandler{
+    background-color:  rgba(255, 255, 255, 0) !important;
+    border-color: rgba(255, 255, 255, 0) !important;
 }
