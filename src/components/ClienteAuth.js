@@ -9,7 +9,6 @@ const ClienteAuth = () => {
 
     function isCliente(){
         if (auth?.rol==="cliente") {
-            console.log(auth?.rol)
             return true;
         } else {
             return false;

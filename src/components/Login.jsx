@@ -50,7 +50,6 @@ const Login = () => {
                 {
                     headers: { 'Content-Type': 'application/json' }
                 });
-            console.log(JSON.stringify(response?.data))
 
             const status = response?.data?.status;
             const userid = response?.data?.id;

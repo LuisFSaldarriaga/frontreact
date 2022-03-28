@@ -9,7 +9,6 @@ const HacedorAuth = () => {
 
     function isHacedor(){
         if (auth?.rol==="hacedor") {
-            console.log(auth?.rol)
             return true;
         } else {
             return false;
