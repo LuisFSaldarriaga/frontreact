@@ -1,39 +1,38 @@
-import { React, useEffect, useState, useRef } from "react";
+import { React, useState, useRef } from "react";
 import { Form, Button, Container, InputGroup, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 
-import axios from "../api/axios";
-
 export function RegisterHacedor() {
+    //Configuración de alertas
     toast.configure();
 
-    // Estados
-
+    //Estados
     const [show, setShow] = useState(false);
     const [jobsin, setJobsin] = useState('');
     const [jobs, setjobs] = useState([]);
 
-    // Modal Logic
-
+    //Funciones del modal
     const handleClose = () => setShow(false);
     const handleShow = () => { setShow(true); };
 
-    // Navegacion Logic
-
+    //Declaración Navigate
     const navigate = useNavigate();
 
-    // Referencias
-
+    //Referencias
     const nameRef = useRef();
     const documentRef = useRef();
     const direccionRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
-    const workareaRef = useRef();
+    const workareaRef = useRef();  
 
-    // Logica del boton agregar (modal)
+    //Función boton iniciar sesion
+    const handleIniciarSesion = () => {
+        navigate('/login', { replace: true })
+    };
 
+    //Función del boton agregar (modal)
     const handleAgregar = () => {
         jobs.push(jobsin);
         setJobsin('');
@@ -46,10 +45,8 @@ export function RegisterHacedor() {
         });
     };
 
-    // Logica del boton eliminar (modal)
-
+    //Función del boton eliminar (modal)
     const handleEliminar = () => {
-        const eliminated = jobs[-1];
         jobs.splice(-1, 1);
         setJobsin('');
         toast.success("Eliminado Satisfactoriamente", {
@@ -61,12 +58,11 @@ export function RegisterHacedor() {
         });
     };
 
-    //funcion de registro de trabajos del hacedor
-
+    //Función de registro de trabajos del hacedor
     const handleRegisterJobs = async (hacedorid) => {
-
-        jobs.forEach(type => {
-            fetch("http://localhost:8080/tiposervicio/nuevo", {
+        //Bucle de inscripción de trabajos
+        jobs.forEach(type => {                                          //Itera el array de trabajos inscritos
+            fetch("http://localhost:8080/tiposervicio/nuevo", { 
                 headers: { "Content-Type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({
@@ -77,8 +73,6 @@ export function RegisterHacedor() {
                 .then((response) => response.json())
                 .then((response) => {
                     if (!response.err) {
-                        console.log("registered job" + response?.id);
-
                     } else {
 
                     }
@@ -93,13 +87,16 @@ export function RegisterHacedor() {
             draggable: true,
             hideProgressBar: false
         });
+
+        //Redirección a ingresar
         navigate("/login");
 
     }
 
-    // funcion registro de hacedor
-
+    //Función principal registro de hacedor
     const handleRegister = async () => {
+
+        //Formato y captura de información
         const name = nameRef.current.value;
         const document = documentRef.current.value;
         const direccion = direccionRef.current.value;
@@ -108,6 +105,7 @@ export function RegisterHacedor() {
         const workrange = workareaRef.current.value;
         const job = jobs[0];
 
+        //Fetch
         fetch("http://localhost:8080/hacedor/registrar", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
@@ -124,9 +122,8 @@ export function RegisterHacedor() {
             .then((response) => response.json())
             .then((response) => {
                 if (!response.err) {
-                    const id = response?.id;
-                    handleRegisterJobs(id);
-                    console.log("registered")
+                    const id = response?.id; //Captura de la id unica de hacedor
+                    handleRegisterJobs(id); //Registro de los trabajos ingresados de acuerdo a la id capturada
                 } else {
 
                 }
@@ -134,9 +131,7 @@ export function RegisterHacedor() {
             .catch((error) => console.log(error));
     };
 
-    const handleIniciarSesion = () => {
-        navigate('/login', { replace: true })
-    };
+
 
     return (
 

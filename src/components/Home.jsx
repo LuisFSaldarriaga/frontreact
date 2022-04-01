@@ -2,11 +2,15 @@ import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 
-
 const Home = () => {
+
+    //Contexto de sesión
     const { auth } = useAuth();
+
+    //Declaración Navigate
     const navigate = useNavigate();
 
+    //Redireccion basada en rol
     function isRol(){
         if (auth?.rol==="hacedor") {
             console.log(auth?.rol)
@@ -21,6 +25,7 @@ const Home = () => {
         isRol();
     }, [isRol]);
 
+    //Pagina en caso de rol fallido
     return (
         <section>
             <h1>Home</h1>

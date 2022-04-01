@@ -10,12 +10,15 @@ import { Form, Button, Container, Row, Col, Stack } from "react-bootstrap";
 const LOGIN_URL = '/ingresar';
 
 const Login = () => {
+    //Contexto Login
     const { setAuth } = useAuth();
 
+    //Declaraciones Navigate
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
+    //Referencias y estados para la captura y muestra de datos.
     const userRef = useRef();
     const errRef = useRef();
     const rolRef = useRef();
@@ -32,6 +35,7 @@ const Login = () => {
         setErrMsg('');
     }, [user, pwd]);
 
+    //Funciones de los botones de registro
     const handleRegisterCliente = () => {
         navigate('/register_cliente', { replace: true })
     };
@@ -40,20 +44,24 @@ const Login = () => {
         navigate('/register_hacedor', { replace: true })
     };
 
+    //Funcion principal boton ingresar
     const handleSubmit = async (e) => {
         e.preventDefault();
         const rol = rolRef.current.value;
 
         try {
+            //Fetch
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({ email: user, password: pwd, rol }),
                 {
                     headers: { 'Content-Type': 'application/json' }
                 });
-
+            
+            //Captura de datos de la respuesta
             const status = response?.data?.status;
             const userid = response?.data?.id;
-
+            
+            //Validación de datos recibidos
             if (status === "valid") {
                 setAuth({ user, pwd, rol, userid });
                 setUser('');
@@ -114,7 +122,7 @@ const Login = () => {
 
                                                 <p ref={errRef} className={errMsg ? "errorNotification" : "offscreen"} aria-live="assertive"> {errMsg} </p>
 
-                                                <Form.Group className="" >
+                                                <Form.Group>
                                                     <Form.Label htmlFor="rolInput">Rol</Form.Label>
                                                     <Form.Select className="form-control" ref={rolRef} defaultValue="norol" id="rolInput">
                                                         <option disabled value="norol">Seleccione su rol...</option>
@@ -124,7 +132,7 @@ const Login = () => {
                                                     </Form.Select>
                                                 </Form.Group>
 
-                                                <Form.Group className="" >
+                                                <Form.Group>
                                                     <Form.Label htmlFor="emailInput">E-mail</Form.Label>
                                                     <Form.Control
                                                         className=""
@@ -139,7 +147,7 @@ const Login = () => {
                                                     />
                                                 </Form.Group>
 
-                                                <Form.Group className="">
+                                                <Form.Group>
                                                     <Form.Label htmlFor="passwordInput">Contraseña</Form.Label>
                                                     <Form.Control
                                                         className=""
@@ -154,7 +162,7 @@ const Login = () => {
                                                 </Form.Group>
 
                                                 <Form.Group className="d-flex justify-content-center align-items-center form-control-lg">
-                                                    <Button className="submitButton" variant="primary" type="submit" >
+                                                    <Button className="submitButton" id="submitButton" variant="primary" type="submit" >
                                                         Ingresar
                                                     </Button>
                                                 </Form.Group>
@@ -164,11 +172,11 @@ const Login = () => {
                                     <Container className="d-flex mb-3 justify-content-center flex-wrap" >
                                         ¿No te has registrado aun? Registrate aquí!
                                         <Container className="d-flex mb-3 justify-content-between">
-                                            <Button className="link2" variant="secondary" onClick={handleRegisterCliente} >
+                                            <Button className="link2" id="registerClienteButton" variant="secondary" onClick={handleRegisterCliente} >
                                                 Como Cliente
                                             </Button>
 
-                                            <Button className="link2" variant="secondary" onClick={handleRegisterHacedor} >
+                                            <Button className="link2" id="registerHacedorButton" variant="secondary" onClick={handleRegisterHacedor} >
                                                 Como Hacedor
                                             </Button>
                                         </Container>

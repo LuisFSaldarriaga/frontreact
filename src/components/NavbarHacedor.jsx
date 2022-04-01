@@ -5,9 +5,13 @@ import useAuth from "../hooks/useAuth";
 import '../stylesheets/basicNavbar.css';
 
 export function NavbarHacedor() {
+    //Contexto de sesión
     const { setAuth } = useAuth();
+
+    //Declaración Navigate
     const navigate = useNavigate();
 
+    //Función cierre de sesion
     const logout = async () => { 
         setAuth({});
         navigate('/login');

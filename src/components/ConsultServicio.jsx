@@ -6,13 +6,16 @@ import useAuth from "../hooks/useAuth";
 
 
 export function ConsultServicio() {
+    //Configuración de alertas
     toast.configure();
 
+    //Contexto de sesion
     const { auth } = useAuth();
 
+    //Estados
     const [services, setServices] = useState([]);
     const [user, setUser] = useState();
-    const [dashboard, setDashboard] = useState(
+    const [dashboard, setDashboard] = useState(    //El estado se setea con valores default para evitar exepciones.
         {
             "type": "",
             "descryption": "",
@@ -31,8 +34,10 @@ export function ConsultServicio() {
         }
     );
 
+    //Captura de constante
     const id = auth.userid;
 
+    //Solicitud de datos para el menú
     useEffect(() => {
         fetch("http://localhost:8080/servicios/emparejar", {
             headers: { "Content-Type": "application/json" },
@@ -53,6 +58,8 @@ export function ConsultServicio() {
             .catch((error) => console.log(error));
     }, []);
 
+
+    //Función para definir el renderizado de la selección del usuario
     const handleOpenDashboard = (cache => param => {
         const renderId = param;
         if (!cache[param])
@@ -68,8 +75,8 @@ export function ConsultServicio() {
                     .then((response) => response.json())
                     .then((response) => {
                         if (!response.err) {
-                            setDashboard(response);
-                            getUserData();
+                            setDashboard(response); //Definición de selección
+                            getUserData();          //Solicitud de datos del hacedor
                         } else {
 
                         }
@@ -80,8 +87,10 @@ export function ConsultServicio() {
     }
     )({});
 
+    //Funcion para solicitar los datos del hacedor
     const getUserData = () => {
 
+        //Captura de datos desde el contexto
         const email = auth?.user;
         const password = auth?.pwd;
 
@@ -104,6 +113,7 @@ export function ConsultServicio() {
             .catch((error) => console.log(error));
     };
 
+    //Funcion principal aceptar servicio
     const handleAcceptService = async () => {
 
         var payload = "";
@@ -150,7 +160,10 @@ export function ConsultServicio() {
 
     };
 
+    //Funcion de renderizado de seleccion
     const Print = () => {
+
+        //Captura de seleccion
         const data = dashboard;
 
         return (

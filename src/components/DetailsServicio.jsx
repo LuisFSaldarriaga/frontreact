@@ -5,14 +5,16 @@ import useAuth from "../hooks/useAuth";
 
 
 export function DetailsServicio() {
+    //Configuración de alertas
     toast.configure();
 
+    //Contexto de sesion
     const { auth } = useAuth();
 
-
+    //Estados
     const [user, setUser] = useState();
     const [services, setServices] = useState([]);
-    const [dashboard, setDashboard] = useState(
+    const [dashboard, setDashboard] = useState(   //El estado se setea con valores default para evitar exepciones.
         {
             "type": "",
             "descryption": "",
@@ -30,9 +32,11 @@ export function DetailsServicio() {
             "id": 0
         }
     );
-
+    
+    //Captura de constante
     const id = auth.userid;
 
+    //Solicitud de datos para el menú
     useEffect(() => {
         fetch("http://localhost:8080/servicios/emparejados", {
             headers: { "Content-Type": "application/json" },
@@ -52,6 +56,7 @@ export function DetailsServicio() {
             .catch((error) => console.log(error));
     }, []);
 
+    //Función para definir el renderizado de la selección del usuario
     const handleOpenDashboard = (cache => param => {
         const renderId = param;
         if (!cache[param])
@@ -67,7 +72,7 @@ export function DetailsServicio() {
                     .then((response) => response.json())
                     .then((response) => {
                         if (!response.err) {
-                            setDashboard(response);
+                            setDashboard(response); //Definición de selección
                         } else {
 
                         }
@@ -78,30 +83,7 @@ export function DetailsServicio() {
     }
     )({});
 
-    const getUserData = () => {
-
-        const email = auth?.user;
-        const password = auth?.pwd;
-
-        fetch("http://localhost:8080/hacedor/ingresar", {
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-            body: JSON.stringify({
-                email,
-                password
-            }),
-        })
-            .then((response) => response.json())
-            .then((response) => {
-                if (!response.err) {
-                    setUser(response);
-                } else {
-
-                }
-            })
-            .catch((error) => console.log(error));
-    };
-
+    //Funcion cancelar servicio
     const handleCancelService = async () => {
 
         var payload = "";
@@ -147,7 +129,10 @@ export function DetailsServicio() {
 
     };
 
+    //Funcion de renderizado de seleccion
     const Print = () => {
+
+        //Captura de selección
         const data = dashboard;
 
         return (

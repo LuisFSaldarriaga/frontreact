@@ -5,24 +5,30 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
 export function RequestServicio() {
+    //Configuración de alertas
     toast.configure();
 
+    //Contexto de sesión
     const { auth } = useAuth();
 
+    //Estados
     const [show, setShow] = useState(false);
     const [types, setTypes] = useState([]);
     const [user, setUser] = useState();
 
-
+    //Referencias
     const typeRef = useRef();
     const descryptionRef = useRef();
     const valueRef = useRef();
 
+    //Declaración Navigate
     const navigate = useNavigate();
 
+    //Funciones del modal
     const handleClose = () => setShow(false);
     const handleShow = () => { setShow(true); };
 
+    //Solicitud de datos para el select
     useEffect(() => {
         fetch("http://localhost:8080/tiposervicio/disponibles", {
             method: "GET",
@@ -40,11 +46,13 @@ export function RequestServicio() {
 
     }, []);
 
+    //Función de solicitud y captura de los datos del cliente
     const getUserData = () => {
-
+        //Captura de los datos del contexto
         const email = auth?.user;
         const password = auth?.pwd;
 
+        //Fetch
         fetch("http://localhost:8080/clientes/ingresar", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
@@ -56,8 +64,8 @@ export function RequestServicio() {
             .then((response) => response.json())
             .then((response) => {
                 if (!response.err) {
-                    setUser(response);
-                    handleShow();
+                    setUser(response); //Captura de los datos de la respuesta
+                    handleShow();      //Mostrar el modal
                 } else {
 
                 }
@@ -65,8 +73,9 @@ export function RequestServicio() {
             .catch((error) => console.log(error));
     };
 
+    //Función principal incripción de servicio
     const handleRequestService = async () => {
-
+        //Formato y captura de la información
         var payload = "";
         const type = typeRef.current.value;
         const descryption = descryptionRef.current.value;
@@ -81,7 +90,7 @@ export function RequestServicio() {
             cliente: user
         })
 
-
+        //Fetch
         fetch("http://localhost:8080/servicios/solicitar", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
@@ -90,7 +99,7 @@ export function RequestServicio() {
             .then((response) => response.json())
             .then((response) => {
                 if (!response.err) {
-                    const id = response.id;
+                    const id = response.id; 
                     toast.success("Servicio Solicitado Satisfactoriamente con la id: "+id , {
                         position: "top-right",
                         autoClose: 5000,
@@ -105,12 +114,11 @@ export function RequestServicio() {
             .catch((error) => console.log(error));
     };
 
-    const handleRegister = async () => {handleRequestService();};
-
+    //Función del boton continuar
     const handleContinue = async () => {
-        handleRegister();
-        handleClose();
-        navigate("/solicitar_servicio");  
+        handleRequestService();           //Ejecutar funcion principal
+        handleClose();                    //Cerrar modal
+        navigate("/solicitar_servicio");  //Redirección a solicitar servicio
     };
 
     return (
@@ -133,10 +141,10 @@ export function RequestServicio() {
                             ¿Estas seguro acerca de solicitar el servicio?
                         </Modal.Body>
                         <Modal.Footer className="d-flex modalFooter justify-content-between">
-                            <Button variant="secondary" onClick={handleClose}>
+                            <Button variant="secondary" onClick={handleClose} id="RSCancelarButton">
                                 Cancelar
                             </Button>
-                            <Button onClick={handleContinue}>Continuar</Button>
+                            <Button onClick={handleContinue} id="RSContinuarButton">Continuar</Button>
 
                         </Modal.Footer>
                     </form>
@@ -172,7 +180,7 @@ export function RequestServicio() {
                         </InputGroup>
                     </Form.Group>
 
-                    <Button variant="primary" onClick={getUserData} >
+                    <Button variant="primary" onClick={getUserData} id="RSSolicitarButton" >
                         Solicitar
                     </Button>
 

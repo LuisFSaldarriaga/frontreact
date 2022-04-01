@@ -4,25 +4,35 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 export function RegisterCliente() {
+    //Configuración de alertas
     toast.configure();
 
+    //Declaración Navigate
     const navigate = useNavigate();
 
+    //Declaración de referencias para la captura de datos
     const nameRef = useRef();
     const documentRef = useRef();
     const direccionRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
+    
+    //Función de boton iniciar sesion
+    const handleIniciarSesion = () => {
+        navigate("/login");
+    };
 
-
+    //Funcion principal boton registro
     const handleRegisterUser = () => {
 
+        //Formato y captura de información
         const name = nameRef.current.value;
         const document = documentRef.current.value;
         const direccion = direccionRef.current.value;
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
+        //Fetch
         fetch("http://localhost:8080/clientes/registrar", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
@@ -45,18 +55,16 @@ export function RegisterCliente() {
                         draggable: true,
                         hideProgressBar: false
                     });
-                    console.log("registered")
                 } else {
 
                 }
             })
             .catch((error) => console.log(error));
+        //Redirección a pagina de ingreso
         navigate("/login");
     };
 
-    const handleIniciarSesion = () => {
-        navigate("/login");
-    };
+
 
     return (
 
@@ -85,12 +93,12 @@ export function RegisterCliente() {
                         <Form.Control ref={emailRef} type="email" placeholder="Ingrese el email" />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="mb-3" controlId="RCPassword">
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control ref={passwordRef} type="password" placeholder="Ingrese la contraseña" />
                     </Form.Group >
 
-                    <Form.Group className="d-flex mb-3 justify-content-center align-items-center" >
+                    <Form.Group className="d-flex mb-3 justify-content-center align-items-center" controlId="RCButtonSubmit" >
                         <Button className="submitButton" variant="secondary" onClick={handleRegisterUser}>
                             Registrarse
                         </Button>
@@ -100,7 +108,7 @@ export function RegisterCliente() {
                 <Container className="d-flex mb-3 justify-content-center flex-wrap" >
                     ¿Ya estás registrado? Inicia sesión aquí!
                     <Container className="d-flex mb-3 justify-content-center">
-                        <Button className="link2" variant="secondary" onClick={handleIniciarSesion} >
+                        <Button className="link2" variant="secondary" controlId="RCButtonLogin" onClick={handleIniciarSesion} >
                             Iniciar Sesion
                         </Button>
                     </Container>

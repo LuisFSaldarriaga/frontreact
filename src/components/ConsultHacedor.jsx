@@ -3,17 +3,19 @@ import { Form, Button, Container, InputGroup } from "react-bootstrap";
 
 export function ConsultHacedor() {
 
-    const [match, setMatch] = useState([]);
+    //Estados
+    const [match, setMatch] = useState([]);                    //Almacena los datos a imprimir
     const [idState, setIdState] = useState(false);
     const [emailState, setEmailState] = useState(true);
     const [documentState, setDocumentState] = useState(true);
-    const [criteria, setCriteria] = useState("id");
+    const [criteria, setCriteria] = useState("id");            //Define el criterio de busqueda
 
-
+    //Referencias
     const idRef = useRef();
     const emailRef = useRef();
     const documentRef = useRef();
 
+    //Renderizado de vistas segun criterio de busqueda
     const handleIdShow = () => {
         setIdState(false);
         setEmailState(true);
@@ -35,8 +37,10 @@ export function ConsultHacedor() {
         setCriteria("document");
     };
 
+    //Funcion principal consultar
     const handleConsult = () => {
 
+        //Captura y formato de informacion
         const id = idRef.current.value;
         const document = documentRef.current.value;
         const email = emailRef.current.value;
@@ -56,6 +60,7 @@ export function ConsultHacedor() {
             })
         }
 
+        //Fetch
         fetch("http://localhost:8080/hacedor/consultar", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
@@ -64,7 +69,7 @@ export function ConsultHacedor() {
             .then((response) => response.json())
             .then((response) => {
                 if (!response.err) {
-                    setMatch([response]);
+                    setMatch([response]); //Captura de datos a imprimir
                 } else {
 
                 }
@@ -73,9 +78,6 @@ export function ConsultHacedor() {
 
     };
 
-
-
-
     return (
 
         <>
@@ -83,14 +85,13 @@ export function ConsultHacedor() {
                 <h3>Ingrese el dato de busqueda:</h3>
                 <Form>
                     <Container>
-                        <Form.Group className="mb-3" controlId="stateDef" >
+                        <Form.Group className="mb-3" controlId="CHStateCheck" >
                             <Form.Check
                                 defaultChecked
                                 inline
                                 label="ID de hacedor"
                                 name="group1"
                                 type="radio"
-
                                 value="id"
                                 onChange={handleIdShow}
                             />
@@ -99,7 +100,6 @@ export function ConsultHacedor() {
                                 label="Email"
                                 name="group1"
                                 type="radio"
-
                                 value="email"
                                 onChange={handleEmailShow}
                             />
@@ -108,7 +108,6 @@ export function ConsultHacedor() {
                                 label="Documento"
                                 name="group1"
                                 type="radio"
-
                                 value="document"
                                 onChange={handleDocumentShow}
                             />
@@ -136,7 +135,7 @@ export function ConsultHacedor() {
                         <Form.Control ref={emailRef} type="email" placeholder="Ingrese el email" />
                     </Form.Group>
 
-                    <Button onClick={handleConsult} variant="primary">
+                    <Button onClick={handleConsult} id="CHBuscarButton" variant="primary">
                         Buscar Coincidencia
                     </Button>
                 </Form>
