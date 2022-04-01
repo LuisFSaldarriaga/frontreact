@@ -27,8 +27,6 @@ export function NavbarHacedor() {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
                             <Link className="navLinkCustom mx-1" to="/consultar_servicio">Encontrar Servicios</Link>
-                        </Nav>
-                        <Nav className="me-auto">
                             <Link className="navLinkCustom mx-1" to="/dashboard">Mis Servicios</Link>
                         </Nav>
                         <Nav>
