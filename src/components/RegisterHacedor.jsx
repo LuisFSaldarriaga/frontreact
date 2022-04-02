@@ -154,7 +154,7 @@ export function RegisterHacedor() {
                                 <Form.Label>Trabajo</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        type="email"
+                                        type="text"
                                         placeholder="Ingrese un trabajo"
                                         autoComplete="off"
                                         onChange={(e) => setJobsin(e.target.value)}
@@ -180,11 +180,11 @@ export function RegisterHacedor() {
                                 })}
                         </Modal.Body>
                         <Modal.Footer className="d-flex modalFooter justify-content-between">
-                            <Button variant="secondary" onClick={handleClose}>
+                            <Button id="RHCancelButton" variant="secondary" onClick={handleClose}>
                                 Cancelar
                             </Button>
-                            <Button onClick={handleEliminar}>Eliminar</Button>
-                            <Button onClick={handleRegister}>Continuar</Button>
+                            <Button id="RHDeleteButton" onClick={handleEliminar}>Eliminar</Button>
+                            <Button id="RHContinueButton" onClick={handleRegister}>Continuar</Button>
 
                         </Modal.Footer>
                     </form>
@@ -193,7 +193,7 @@ export function RegisterHacedor() {
 
                     <Form.Group className="mb-3" controlId="RHName">
                         <Form.Label>Nombre</Form.Label>
-                        <Form.Control ref={nameRef} type="text" placeholder="Ingrese el nombre completo" />
+                        <Form.Control ref={nameRef} type="text" placeholder="Ingrese el nombre completo" required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="RHDocument">
@@ -202,29 +202,29 @@ export function RegisterHacedor() {
                         </Form.Label>
                         <InputGroup className="mb-2">
                             <InputGroup.Text>C.C.</InputGroup.Text>
-                            <Form.Control ref={documentRef} type="number" placeholder="Ingrese el documento" />
+                            <Form.Control ref={documentRef} type="number" placeholder="Ingrese el documento"  required/>
                         </InputGroup>
 
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="RHDireccion">
                         <Form.Label>Direccion</Form.Label>
-                        <Form.Control ref={direccionRef} type="text" placeholder="Ingrese la direccion" />
+                        <Form.Control ref={direccionRef} type="text" placeholder="Ingrese la direccion"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="RHEmail">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control ref={emailRef} type="email" placeholder="Ingrese el email" />
+                        <Form.Control ref={emailRef} type="email" placeholder="Ingrese el email"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="RHPassword">
                         <Form.Label>Contraseña</Form.Label>
-                        <Form.Control ref={passwordRef} type="password" placeholder="Ingrese la contraseña" />
+                        <Form.Control ref={passwordRef} type="password" placeholder="Ingrese la contraseña"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="RHWorkarea">
                         <Form.Label>Area de trabajo</Form.Label>
-                        <Form.Control ref={workareaRef} type="text" placeholder="Ingrese su ciudad de trabajo" />
+                        <Form.Control ref={workareaRef} type="text" placeholder="Ingrese su ciudad de trabajo"  required/>
                     </Form.Group>
 
                     <Button id="submitButton" className="btn" onClick={handleShow}>

@@ -116,7 +116,7 @@ export function ConsultHacedor() {
 
                     <Form.Group className="mb-3" controlId="CHId" hidden={idState} >
                         <Form.Label>Numero de Identificacion: </Form.Label>
-                        <Form.Control ref={idRef} type="number" placeholder="Ingrese el nombre completo" />
+                        <Form.Control ref={idRef} type="number" placeholder="Ingrese el id unico" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="CHDocument" hidden={documentState} >

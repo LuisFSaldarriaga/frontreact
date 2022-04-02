@@ -75,31 +75,31 @@ export function RegisterCliente() {
 
                     <Form.Group className="mb-3" controlId="RCName">
                         <Form.Label>Nombre</Form.Label>
-                        <Form.Control ref={nameRef} type="text" placeholder="Ingrese el nombre completo" />
+                        <Form.Control ref={nameRef} type="text" placeholder="Ingrese el nombre completo"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="RCDocument">
                         <Form.Label>Documento</Form.Label>
-                        <Form.Control ref={documentRef} type="number" placeholder="ingrese el numero de documento" />
+                        <Form.Control ref={documentRef} type="number" placeholder="ingrese el numero de documento"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="RCDireccion">
                         <Form.Label>Direccion</Form.Label>
-                        <Form.Control ref={direccionRef} type="text" placeholder="Ingrese la direccion" />
+                        <Form.Control ref={direccionRef} type="text" placeholder="Ingrese la direccion"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="RCEmail">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control ref={emailRef} type="email" placeholder="Ingrese el email" />
+                        <Form.Control ref={emailRef} type="email" placeholder="Ingrese el email"  required/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="RCPassword">
                         <Form.Label>Contraseña</Form.Label>
-                        <Form.Control ref={passwordRef} type="password" placeholder="Ingrese la contraseña" />
+                        <Form.Control ref={passwordRef} type="password" placeholder="Ingrese la contraseña"  required/>
                     </Form.Group >
 
-                    <Form.Group className="d-flex mb-3 justify-content-center align-items-center" controlId="RCButtonSubmit" >
-                        <Button className="submitButton" variant="secondary" onClick={handleRegisterUser}>
+                    <Form.Group className="d-flex mb-3 justify-content-center align-items-center"  >
+                        <Button className="submitButton" id="RCButtonRegister" variant="secondary" onClick={handleRegisterUser}>
                             Registrarse
                         </Button>
                     </Form.Group>
@@ -108,7 +108,7 @@ export function RegisterCliente() {
                 <Container className="d-flex mb-3 justify-content-center flex-wrap" >
                     ¿Ya estás registrado? Inicia sesión aquí!
                     <Container className="d-flex mb-3 justify-content-center">
-                        <Button className="link2" variant="secondary" controlId="RCButtonLogin" onClick={handleIniciarSesion} >
+                        <Button className="link2" variant="secondary" id="RCButtonLogin" onClick={handleIniciarSesion} >
                             Iniciar Sesion
                         </Button>
                     </Container>
